@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a simple, user-friendly app for a provision store where customers can browse products and place orders.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal flat store logo with a small grocery bag icon, warm green + cream palette (easy-provision-logo.dim_512x512.png)\n- Seamless subtle paper-grain or light pattern background in warm neutral tones (easy-provision-bg-tile.dim_1024x1024.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-customer-facing-product-catalog-ui-that-loads-products-from-the-backend-and-supports-browsing-by-category-and-searching-by-name",
+      "title": "Create a customer-facing product catalog UI that loads products from the backend and supports browsing by category and searching by name.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-cart-flow-that-allows-customers-to-add-remove-items-change-quantities-and-view-an-order-summary-before-checkout",
+      "title": "Implement a cart flow that allows customers to add/remove items, change quantities, and view an order summary before checkout.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-order-placement-flow-that-submits-an-order-to-the-backend-and-returns-an-order-confirmation-with-an-order-id-and-order-details",
+      "title": "Implement an order placement flow that submits an order to the backend and returns an order confirmation with an order ID and order details.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-visual-theme-for-the-app-and-apply-it-consistently-across-pages-components-typography-spacing-colors-buttons-cards-do-not-use-a-blue-purple-primary-palette",
+      "title": "Create a coherent visual theme for the app and apply it consistently across pages/components (typography, spacing, colors, buttons, cards). Do not use a blue/purple primary palette.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-brand-assets-logo-and-subtle-background-into-the-frontend-and-display-them-in-the-ui",
+      "title": "Add generated static brand assets (logo and subtle background) into the frontend and display them in the UI.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Product catalog browsing (view items/products)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Order placement flow (submit orders)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add a simple backend data model and persistence for products and orders within the single Motoko actor, including stable storage across upgrades.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Easy Provision Store",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

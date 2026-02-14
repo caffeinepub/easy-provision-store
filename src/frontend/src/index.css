@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --background: 0.98 0.01 85;
+        --foreground: 0.25 0.02 85;
+        --card: 1 0 0;
+        --card-foreground: 0.25 0.02 85;
+        --popover: 1 0 0;
+        --popover-foreground: 0.25 0.02 85;
+        --primary: 0.55 0.12 145;
+        --primary-foreground: 0.98 0.01 85;
+        --secondary: 0.92 0.02 85;
+        --secondary-foreground: 0.25 0.02 85;
+        --muted: 0.94 0.015 85;
+        --muted-foreground: 0.52 0.02 85;
+        --accent: 0.88 0.03 75;
+        --accent-foreground: 0.25 0.02 85;
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.98 0.01 85;
+        --border: 0.88 0.015 85;
+        --input: 0.88 0.015 85;
+        --ring: 0.55 0.12 145;
+        --chart-1: 0.60 0.15 145;
+        --chart-2: 0.65 0.12 75;
+        --chart-3: 0.70 0.10 45;
+        --chart-4: 0.58 0.14 165;
+        --chart-5: 0.62 0.13 125;
+        --sidebar: 0.98 0.01 85;
+        --sidebar-foreground: 0.25 0.02 85;
+        --sidebar-primary: 0.55 0.12 145;
+        --sidebar-primary-foreground: 0.98 0.01 85;
+        --sidebar-accent: 0.92 0.02 85;
+        --sidebar-accent-foreground: 0.25 0.02 85;
+        --sidebar-border: 0.88 0.015 85;
+        --sidebar-ring: 0.55 0.12 145;
+    }
+
+    .dark {
+        --background: 0.18 0.02 85;
+        --foreground: 0.95 0.01 85;
+        --card: 0.22 0.02 85;
+        --card-foreground: 0.95 0.01 85;
+        --popover: 0.20 0.02 85;
+        --popover-foreground: 0.95 0.01 85;
+        --primary: 0.68 0.12 145;
+        --primary-foreground: 0.18 0.02 85;
+        --secondary: 0.28 0.02 85;
+        --secondary-foreground: 0.95 0.01 85;
+        --muted: 0.26 0.02 85;
+        --muted-foreground: 0.65 0.02 85;
+        --accent: 0.35 0.03 75;
+        --accent-foreground: 0.95 0.01 85;
+        --destructive: 0.60 0.22 25;
+        --destructive-foreground: 0.95 0.01 85;
+        --border: 0.30 0.02 85;
+        --input: 0.30 0.02 85;
+        --ring: 0.68 0.12 145;
+        --chart-1: 0.65 0.15 145;
+        --chart-2: 0.70 0.12 75;
+        --chart-3: 0.75 0.10 45;
+        --chart-4: 0.63 0.14 165;
+        --chart-5: 0.67 0.13 125;
+        --sidebar: 0.20 0.02 85;
+        --sidebar-foreground: 0.95 0.01 85;
+        --sidebar-primary: 0.68 0.12 145;
+        --sidebar-primary-foreground: 0.18 0.02 85;
+        --sidebar-accent: 0.28 0.02 85;
+        --sidebar-accent-foreground: 0.95 0.01 85;
+        --sidebar-border: 0.30 0.02 85;
+        --sidebar-ring: 0.68 0.12 145;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer utilities {
+    .catalog-page {
+        background-image: url('/assets/generated/easy-provision-bg-tile.dim_1024x1024.png');
+        background-repeat: repeat;
+        background-size: 512px 512px;
+        background-blend-mode: overlay;
+        background-color: oklch(var(--background));
+    }
+    
+    .catalog-page::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, 
+            oklch(var(--background) / 0.95), 
+            oklch(var(--background) / 0.85)
+        );
+        pointer-events: none;
+    }
+    
+    .catalog-page > * {
+        position: relative;
+        z-index: 1;
+    }
+}

@@ -1,0 +1,138 @@
+{
+  "kind": "build_request",
+  "title": "Easy Provision Store: product catalog + cart checkout + order submission",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a customer-facing product catalog UI that loads products from the backend and supports browsing by category and searching by name.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Build a simple, user-friendly app for a provision store where customers can browse products and place orders."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a query method to return the full product list (including id, name, description (optional), price, unit/size (optional), category, inStock/available).",
+        "Frontend shows a product grid/list with: product name, price, category, and an Add to Cart action.",
+        "Frontend provides a text search input that filters products by name (client-side is acceptable).",
+        "Frontend provides a category filter (All + categories derived from product data).",
+        "Loading and empty states are shown (e.g., skeleton/spinner and 'No products found')."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a cart flow that allows customers to add/remove items, change quantities, and view an order summary before checkout.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "customers can browse and place orders"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Cart state persists during the session (page navigation does not clear it).",
+        "Customers can: add an item, increment/decrement quantity, remove an item, and clear the cart.",
+        "Order summary shows subtotal and total (no taxes/shipping unless explicitly added later).",
+        "Checkout action is disabled when cart is empty."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement an order placement flow that submits an order to the backend and returns an order confirmation with an order ID and order details.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "place orders",
+          "Order placement flow (submit orders)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes an update method to create an order containing: line items (productId, name snapshot, unit price snapshot, quantity), total amount, customer details (at minimum: customer name), and created timestamp.",
+        "Backend returns a unique orderId for each submitted order.",
+        "Frontend checkout collects at minimum: customer name; optionally also collects phone/email and a free-form note field (optional).",
+        "After successful submission, frontend shows a confirmation view with orderId, item list, total, and timestamp, and clears the cart.",
+        "If submission fails, frontend shows a user-friendly error message and preserves the cart + entered checkout fields."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a simple backend data model and persistence for products and orders within the single Motoko actor, including stable storage across upgrades.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Product catalog browsing (view items/products), Order placement flow (submit orders)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Products are available on first load via a seeded list in the backend (no admin UI required).",
+        "Orders are stored in stable state so that they persist across canister upgrades.",
+        "Backend methods are documented in code with brief comments describing inputs/outputs."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create a coherent visual theme for the app and apply it consistently across pages/components (typography, spacing, colors, buttons, cards). Do not use a blue/purple primary palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Easy Provision Store"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App uses a consistent, store-appropriate theme (e.g., warm neutrals/greens) applied across header, product cards, cart, and checkout.",
+        "UI is mobile-friendly and responsive (usable on narrow screens).",
+        "Uses the existing Tailwind/Shadcn component patterns without editing immutable UI component sources."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add generated static brand assets (logo and subtle background) into the frontend and display them in the UI.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Easy Provision Store"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are stored under frontend/public/assets/generated and referenced directly from the frontend (not served via backend).",
+        "Header displays the logo and app name; the background pattern is used subtly on the home/catalog page without harming readability."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in the main actor file).",
+    "Do not edit files under frontend/src/components/ui or other immutablePaths; compose them instead.",
+    "Use English for all user-facing UI text."
+  ],
+  "nonGoals": [
+    "Admin inventory management UI (adding/editing products) is out of scope.",
+    "Payments, delivery/shipping calculations, taxes, discount codes, and receipts/invoices are out of scope.",
+    "Third-party authentication providers are out of scope (Internet Identity only, and only if explicitly added later).",
+    "Real-time order tracking/notifications are out of scope."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal flat store logo with a small grocery bag icon, warm green + cream palette (easy-provision-logo.dim_512x512.png)",
+      "Seamless subtle paper-grain or light pattern background in warm neutral tones (easy-provision-bg-tile.dim_1024x1024.png)"
+    ],
+    "edits": []
+  }
+}

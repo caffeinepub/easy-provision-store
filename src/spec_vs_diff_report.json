@@ -1,0 +1,113 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T20:55:34.168Z",
+  "summary": "The diff adds a basic catalog/cart/checkout UI and a Motoko backend, but several core acceptance criteria are not met: backend product/order models don’t match the spec (no inStock, no line-item orders, no timestamp), checkout submits only the first cart item, error handling/confirmation are implemented via sessionStorage rather than backend order details, and backend persistence/seed data for products/orders is missing. Some unrequested features were also added (Internet Identity plumbing, admin-like addProduct, category/search backend endpoints, shipping address requirement).",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Backend query method returns full product list including id, name, optional description, price, optional unit/size, category, and inStock/available.",
+      "reason": "Backend Product type lacks unit/size and inStock/available boolean (uses stock: Nat instead), and description is not optional.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Backend exposes an update method to create an order containing line items (productId, name snapshot, unit price snapshot, quantity), total amount, customer details (min: customer name), and created timestamp, returning a unique orderId.",
+      "reason": "Backend order model is a single-product order (productId/quantity), lacks line items array, lacks created timestamp, and lacks name/unit price snapshots; frontend also submits only the first cart item and stores confirmation details in sessionStorage rather than using backend-returned order details/timestamp.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/CheckoutPage.tsx",
+        "frontend/src/pages/OrderConfirmationPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Frontend shows a user-friendly error message on submission failure and preserves cart + entered checkout fields.",
+      "reason": "Checkout catch block only logs to console; no visible Alert/error state is shown in the provided code snippet.",
+      "evidence": [
+        "frontend/src/pages/CheckoutPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Seeded products available on first load (no admin UI) and orders stored in stable state to persist across upgrades; backend methods documented with brief comments.",
+      "reason": "Backend uses in-memory Map and var counters without any stable storage, upgrade hooks, or seeded product initialization; code shown contains no brief method documentation comments.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Generated logo and background images are stored under frontend/public/assets/generated and referenced from the frontend.",
+      "reason": "Frontend references the assets by path, but the diff summary does not show the actual image files being added under frontend/public/assets/generated (some files were omitted due to limits), so presence cannot be confirmed from available evidence.",
+      "evidence": [
+        "frontend/src/components/layout/Header.tsx",
+        "frontend/src/index.css"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication/provider and actor recreation logic added (useInternetIdentity, InternetIdentityProvider, identity-aware actor creation).",
+      "reason": "BuildRequest explicitly says third-party auth providers are out of scope and Internet Identity should be added only if explicitly requested later; it was not requested here.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/main.tsx"
+      ]
+    },
+    {
+      "description": "Backend admin-like product creation endpoint addProduct (and getProduct).",
+      "reason": "Spec did not request product creation endpoints; products were to be seeded (no admin management).",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Backend category and name-search endpoints (getProductsByCategory, searchProductsByName).",
+      "reason": "Spec only required a single query to return the full product list; filtering/search could be client-side.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Checkout requires/collects shipping address and backend stores shippingAddress on the order.",
+      "reason": "Spec requires at minimum customer name; phone/email/note are optional. Shipping address was not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/pages/CheckoutPage.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/catalog/CatalogFilters.tsx",
+    "frontend/src/components/catalog/ProductCard.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/layout/Footer.tsx",
+    "frontend/src/components/layout/Header.tsx",
+    "frontend/src/context/CartContext.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/cartStorage.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CartPage.tsx",
+    "frontend/src/pages/CatalogPage.tsx",
+    "frontend/src/pages/CheckoutPage.tsx",
+    "frontend/src/pages/OrderConfirmationPage.tsx",
+    "frontend/src/types/cart.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "frontend/src/App.tsx": "Main application component that sets up TanStack Router with routes for catalog, cart, checkout, and confirmation pages, wrapped in CartProvider for global cart state.",
+  "frontend/src/types/cart.ts": "TypeScript type definitions for cart items and cart state, including product ID, name, price, quantity, and category.",
+  "frontend/src/lib/cartStorage.ts": "Session storage utilities for persisting cart state across page navigation, with BigInt serialization support.",
+  "frontend/src/context/CartContext.tsx": "React context provider for cart state management with actions to add, remove, update quantities, clear cart, and calculate totals.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching products and placing orders via the backend actor.",
+  "frontend/src/components/layout/AppLayout.tsx": "Layout wrapper component that provides consistent header and footer structure across all pages.",
+  "frontend/src/components/layout/Header.tsx": "Responsive header with logo, app name, navigation links, and cart badge showing item count.",
+  "frontend/src/components/layout/Footer.tsx": "Footer component with copyright notice and Caffeine.ai attribution with UTM tracking.",
+  "frontend/src/components/catalog/ProductCard.tsx": "Reusable product card component displaying product details, price, stock status, and add-to-cart button.",
+  "frontend/src/components/catalog/CatalogFilters.tsx": "Filter controls for product catalog including search input and category dropdown selector.",
+  "frontend/src/pages/CatalogPage.tsx": "Main catalog page with product grid, search/filter functionality, loading states, and subtle background pattern with proper Product type import.",
+  "frontend/src/pages/CartPage.tsx": "Shopping cart page showing cart items with quantity controls, remove actions, order summary, and checkout button.",
+  "frontend/src/pages/CheckoutPage.tsx": "Checkout form collecting customer information and delivery details with order summary and submission handling.",
+  "frontend/src/pages/OrderConfirmationPage.tsx": "Order confirmation page displaying order details, items, and total after successful checkout.",
+  "frontend/src/index.css": "Global styles with warm green/neutral OKLCH color palette for light and dark modes, plus catalog page background pattern utility.",
+  "frontend/tailwind.config.js": "Tailwind configuration with Inter font family and extended theme tokens matching the warm provision store aesthetic."
+}

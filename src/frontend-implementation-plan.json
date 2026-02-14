@@ -1,0 +1,218 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Easy Provision Store frontend: catalog, cart, checkout, confirmation, theming, and brand assets",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Customer-facing product catalog page that loads products, supports category filtering and name search, and displays loading/empty states.",
+      "acceptanceCriteria": [
+        "Frontend shows a product grid/list with: product name, price, category, and an Add to Cart action.",
+        "Frontend provides a text search input that filters products by name (client-side is acceptable).",
+        "Frontend provides a category filter (All + categories derived from product data).",
+        "Loading and empty states are shown (e.g., skeleton/spinner and 'No products found')."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Update/align frontend type definitions used by the UI for products (id, name, description optional, price, unit/size optional, category, inStock/available) to match the catalog needs; keep it consistent with the backend canister interface."
+        },
+        {
+          "path": "frontend/src/lib/backendClient.ts",
+          "operation": "create",
+          "description": "Create a small frontend backend-client wrapper that uses the core-infrastructure component’s backend connection configuration to call the product-list capability and return typed Product data. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useProducts.ts",
+          "operation": "create",
+          "description": "Add a React Query hook to load products via the backend client and provide loading/error/empty states to the UI (use @tanstack/react-query patterns already present)."
+        },
+        {
+          "path": "frontend/src/components/catalog/ProductCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable ProductCard that renders product name, price, category, and an Add to Cart button using shadcn-ui composition (e.g., Card/Button). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/catalog/CatalogFilters.tsx",
+          "operation": "create",
+          "description": "Create catalog filter UI (search input + category select) using shadcn-ui composition (e.g., Input/Select). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "create",
+          "description": "Implement the catalog page that fetches products, derives categories from product data, applies client-side search and category filters, and shows loading/empty states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Add routing/navigation wiring so the Catalog page is reachable as the primary browsing view (and becomes the default route)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Session-persistent cart with add/remove, quantity changes, clear cart, and an order summary with disabled checkout when empty.",
+      "acceptanceCriteria": [
+        "Cart state persists during the session (page navigation does not clear it).",
+        "Customers can: add an item, increment/decrement quantity, remove an item, and clear the cart.",
+        "Order summary shows subtotal and total (no taxes/shipping unless explicitly added later).",
+        "Checkout action is disabled when cart is empty."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/types/cart.ts",
+          "operation": "create",
+          "description": "Define frontend cart types (line items keyed by productId, name/price snapshot, quantity) used throughout cart/checkout."
+        },
+        {
+          "path": "frontend/src/lib/cartStorage.ts",
+          "operation": "create",
+          "description": "Implement session persistence for the cart (e.g., sessionStorage read/write helpers) and safe hydration on load."
+        },
+        {
+          "path": "frontend/src/context/CartContext.tsx",
+          "operation": "create",
+          "description": "Create a CartContext provider with actions: add item, increment/decrement, remove, clear; integrate session persistence so navigation does not clear the cart."
+        },
+        {
+          "path": "frontend/src/hooks/useCart.ts",
+          "operation": "create",
+          "description": "Provide a small hook wrapper around CartContext for ergonomic usage in pages/components."
+        },
+        {
+          "path": "frontend/src/pages/CartPage.tsx",
+          "operation": "create",
+          "description": "Build the cart view with editable quantities, remove/clear actions, and an order summary (subtotal/total) with checkout disabled when empty; compose shadcn-ui components without modifying immutable ui sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/Header.tsx",
+          "operation": "create",
+          "description": "Create a header with app name, nav links (Catalog/Cart), and a cart item count badge sourced from CartContext; compose shadcn-ui components (Button/Badge/etc.) without editing immutable ui sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire CartProvider at the app root and register the Cart route; ensure Header is rendered across pages so cart access is always available."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Checkout form that submits an order, shows confirmation with order ID/details on success, clears cart, and preserves inputs/cart on failure.",
+      "acceptanceCriteria": [
+        "Frontend checkout collects at minimum: customer name; optionally also collects phone/email and a free-form note field (optional).",
+        "After successful submission, frontend shows a confirmation view with orderId, item list, total, and timestamp, and clears the cart.",
+        "If submission fails, frontend shows a user-friendly error message and preserves the cart + entered checkout fields."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Update/align frontend type definitions for order submission/confirmation so the frontend can submit a full cart order and render orderId, line items, total, and timestamp returned by the backend."
+        },
+        {
+          "path": "frontend/src/lib/backendClient.ts",
+          "operation": "modify",
+          "description": "Extend the backend client wrapper to call the order-placement capability with the full checkout payload and return the created order for confirmation; use the core-infrastructure backend connection patterns. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/usePlaceOrder.ts",
+          "operation": "create",
+          "description": "Create a React Query mutation hook to submit the checkout payload, handle loading/error state, and return confirmation data."
+        },
+        {
+          "path": "frontend/src/pages/CheckoutPage.tsx",
+          "operation": "create",
+          "description": "Implement checkout UI that collects customer name (required) plus optional phone/email/note, displays an order summary, submits via usePlaceOrder, and on failure shows a friendly error while preserving form state and cart."
+        },
+        {
+          "path": "frontend/src/pages/OrderConfirmationPage.tsx",
+          "operation": "create",
+          "description": "Implement confirmation view that displays orderId, timestamp, item list, and total; clear the cart only after a successful submission and navigation to confirmation."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register routes for Checkout and Order Confirmation pages, and wire navigation from Cart->Checkout and post-submit redirect to confirmation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Apply a consistent warm/neutral/green visual theme (non-blue/purple primary), responsive layout, and shadcn-ui composition patterns.",
+      "acceptanceCriteria": [
+        "App uses a consistent, store-appropriate theme (e.g., warm neutrals/greens) applied across header, product cards, cart, and checkout.",
+        "UI is mobile-friendly and responsive (usable on narrow screens).",
+        "Uses the existing Tailwind/Shadcn component patterns without editing immutable UI component sources."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global Tailwind theme tokens and base styles to establish a warm neutral + green primary palette (avoiding blue/purple), consistent typography/spacing, and responsive defaults; do not modify immutable shadcn/ui sources—style via Tailwind utilities and CSS variables."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared responsive layout wrapper (header + main container sizing/padding) used across all pages; compose shadcn-ui patterns without editing immutable UI component sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/catalog/ProductCard.tsx",
+          "operation": "modify",
+          "description": "Adjust catalog card spacing/typography/button variants to match the global theme and improve mobile responsiveness; compose shadcn-ui components without editing immutable ui sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/CartPage.tsx",
+          "operation": "modify",
+          "description": "Ensure cart page layout is responsive (stacked on mobile, side-by-side summary on larger screens) and uses consistent themed button/card styling via Tailwind + shadcn-ui composition. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/CheckoutPage.tsx",
+          "operation": "modify",
+          "description": "Ensure checkout page form spacing, inputs, and summary follow the same theme and remain usable on narrow screens; compose shadcn-ui components without editing immutable ui sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap routed pages with the shared AppLayout so theme and spacing are applied consistently across views."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add generated static logo and subtle background pattern assets and display them in the UI (no backend serving).",
+      "acceptanceCriteria": [
+        "Generated images are stored under frontend/public/assets/generated and referenced directly from the frontend (not served via backend).",
+        "Header displays the logo and app name; the background pattern is used subtly on the home/catalog page without harming readability."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/easy-provision-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset file at the required path so the frontend can reference it as a static public asset."
+        },
+        {
+          "path": "frontend/public/assets/generated/easy-provision-bg-tile.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated subtle background tile asset file at the required path so the frontend can reference it as a static public asset."
+        },
+        {
+          "path": "frontend/src/components/layout/Header.tsx",
+          "operation": "modify",
+          "description": "Render the logo image from frontend/public/assets/generated/easy-provision-logo.dim_512x512.png alongside the app name in the header; ensure sizing works on mobile and maintains readability."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "modify",
+          "description": "Apply the subtle background using frontend/public/assets/generated/easy-provision-bg-tile.dim_1024x1024.png on the catalog page in a low-contrast way that does not reduce text readability."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add a global utility/class or background style support (e.g., for patterned backgrounds) used by the Catalog page while keeping contrast and accessibility in mind."
+        }
+      ]
+    }
+  ]
+}

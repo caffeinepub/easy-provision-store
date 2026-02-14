@@ -1,0 +1,112 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-customer-facing-product-catalog-ui-that-loads-products-from-the-backend-and-supports-browsing-by-category-and-searching-by-name",
+      "featureTitle": "Create a customer-facing product catalog UI that loads products from the backend and supports browsing by category and searching by name.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/catalog/CatalogFilters.tsx",
+        "frontend/src/components/catalog/ProductCard.tsx",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-cart-flow-that-allows-customers-to-add-remove-items-change-quantities-and-view-an-order-summary-before-checkout",
+      "featureTitle": "Implement a cart flow that allows customers to add/remove items, change quantities, and view an order summary before checkout.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/Header.tsx",
+        "frontend/src/context/CartContext.tsx",
+        "frontend/src/lib/cartStorage.ts",
+        "frontend/src/pages/CartPage.tsx",
+        "frontend/src/types/cart.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-an-order-placement-flow-that-submits-an-order-to-the-backend-and-returns-an-order-confirmation-with-an-order-id-and-order-details",
+      "featureTitle": "Implement an order placement flow that submits an order to the backend and returns an order confirmation with an order ID and order details.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/CheckoutPage.tsx",
+        "frontend/src/pages/OrderConfirmationPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-coherent-visual-theme-for-the-app-and-apply-it-consistently-across-pages-components-typography-spacing-colors-buttons-cards-do-not-use-a-blue-purple-primary-palette",
+      "featureTitle": "Create a coherent visual theme for the app and apply it consistently across pages/components (typography, spacing, colors, buttons, cards). Do not use a blue/purple primary palette.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/catalog/ProductCard.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/CartPage.tsx",
+        "frontend/src/pages/CheckoutPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-brand-assets-logo-and-subtle-background-into-the-frontend-and-display-them-in-the-ui",
+      "featureTitle": "Add generated static brand assets (logo and subtle background) into the frontend and display them in the UI.",
+      "files": [
+        "frontend/src/components/layout/Header.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
